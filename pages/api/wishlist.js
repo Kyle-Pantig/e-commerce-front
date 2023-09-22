@@ -1,0 +1,29 @@
+import { mongooseConnect } from "@/lib/mongoose";
+import { authOptions } from "./auth/[...nextauth]";
+import { getServerSession } from "next-auth";
+import { WishedProduct } from "@/models/WishedProduct";
+
+export default async function handle(req, res) {
+  await mongooseConnect();
+  const { method } = req;
+  const { user } = await getServerSession(req, res, authOptions);
+  if (method === "POST") {
+    const { product } = req.body;
+    const wishedDoc = await WishedProduct.findOne({
+      userEmail: user.email,
+      product,
+    });
+    if (wishedDoc) {
+      await WishedProduct.findByIdAndDelete(wishedDoc._id);
+      res.json({ wishedDoc });
+    } else {
+      await WishedProduct.create({ userEmail: user.email, product });
+      res.json("Created");
+    }
+  }
+  if (method === "GET") {
+    res.json(
+      await WishedProduct.find({ userEmail: user.email }).populate("product")
+    );
+  }
+}

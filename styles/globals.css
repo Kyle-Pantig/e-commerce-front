@@ -2,26 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: #eee;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+h2 {
+  @apply text-2xl font-bold;
+}
+
+.btn-primary {
+  @apply py-1 px-3 rounded-md flex justify-center items-center text-center font-medium;
+}
+
+.large-btn {
+  @apply text-lg py-1 px-4;
+}
+
+table.basic {
+  @apply w-full;
+}
+
+table.basic th {
+  @apply uppercase text-left text-gray-600 font-normal text-sm;
+}
+
+table thead tr th:nth-child(3),
+table tbody tr td:nth-child(3),
+table tbody tr.subtotal td:nth-child(2) {
+  @apply text-right;
+}
+
+table tr.subtotal td {
+  @apply py-3;
+}
+table tbody tr.subtotal td:nth-child(2) {
+  @apply text-xl;
+}
+
+tr.total td {
+  @apply font-bold;
+}
+
+.nav-link {
+  @apply block py-2 md:p-0;
+}
+
+.flying-image {
+  display: none;
+  max-width: 100px;
+  max-height: 100px;
+  opacity: 1;
+  position: fixed;
+  z-index: 10;
+  animation: fly 1s;
+  border-radius: 10px;
+  /* transition: transform 5s ease-in-out; */
+}
+/* .cart-fade-out {
+  transform: scale(0);
+  transition: transform 1s ease-in-out;
+} */
+
+.wished {
+  @apply p-2 !important;
+}
+
+@keyframes fly {
+  100% {
+    top: 0;
+    left: 60%;
+    opacity: 0;
+    display: none;
+    max-width: 50px;
+    max-height: 50px;
+  }
 }
